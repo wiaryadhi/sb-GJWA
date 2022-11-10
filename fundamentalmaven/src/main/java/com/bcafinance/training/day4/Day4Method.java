@@ -14,13 +14,16 @@ Version 1.0
 
 public class Day4Method {
 
-    public static float convertCelcius(float tempC){
-        return (float)  (((tempC * 9.0f) / 5.0f) + 32.0);
+    public static int intHitung(){
+        int a = 2;
+        int b = 3;
+        return a+b;
+
     }
 
     public static void main(String[] args) {
 
-        System.out.println(convertCelcius(10));
+        System.out.println(intHitung());
 
     }
 
