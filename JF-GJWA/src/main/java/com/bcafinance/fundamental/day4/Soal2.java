@@ -35,10 +35,9 @@ public class Soal2 {
                     high = med-1;
                 }
             }
-        }  if (status==false) {
+        }  if (!status) {
             System.out.println(keyword + " NOT FOUND!!");
         }
-
 
         }
     }
