@@ -38,6 +38,7 @@ public class Day3Input {
 		sBuild.setLength(0);
 		System.out.println(sBuild.append("Lebarnya adalah : ").append(lebar).toString());
 		
+		sn.close();
 		
 	}
 	
