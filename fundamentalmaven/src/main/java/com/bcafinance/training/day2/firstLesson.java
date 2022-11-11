@@ -47,7 +47,7 @@ public class firstLesson {
 //		String strA = "Tb@14XzM";
 //		String newStr = "Ak1.2BuC";
 //		char c = newStr.charAt(0); 
-//		char[] c_arr = strA.toCharArray();
+/	char[] c_arr = strA.toCharArray();
 //	
 //		
 //		int b = 0;
