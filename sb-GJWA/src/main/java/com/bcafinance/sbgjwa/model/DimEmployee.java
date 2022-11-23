@@ -42,6 +42,8 @@ public class DimEmployee {
         SalesPersonFlag = salesPersonFlag;
     }
 
+    // line getter & setter
+
     public String getLastname() {
         return Lastname;
     }
