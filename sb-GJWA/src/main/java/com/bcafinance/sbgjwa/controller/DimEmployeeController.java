@@ -115,5 +115,20 @@ public class DimEmployeeController {
         }
     }
 
+    @GetMapping("/dimemployee/all")
+    public ResponseEntity<List<DimEmployee>> findAll(){
+        try{
+            List<DimEmployee> allDimEmployee = dimEmployeeRepository.findAll();
+            if (allDimEmployee.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(allDimEmployee, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
 
 }

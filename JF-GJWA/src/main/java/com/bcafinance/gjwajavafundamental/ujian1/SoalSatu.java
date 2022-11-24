@@ -24,18 +24,34 @@ public class SoalSatu {
         //inisialisasi scanner
         Scanner sn = new Scanner(System.in);
 
-        while (isAgain) { //loop selama kondisi true
-            try {
+//        while (isAgain) { //loop selama kondisi true
+//            try {
+//                System.out.print("Masukkan angka sepuasnya: ");
+//                intNumber = sn.nextInt();
+//                intTotal += intNumber;
+//
+//            } catch (Exception e) {
+//                System.out.println("masuk kesini");
+//                System.out.println("Jumlah: " + intTotal);
+//                isAgain = false;
+//            }
+//        }
+//        sn.close();
+        try {
+            while (isAgain) { //loop selama kondisi true
                 System.out.print("Masukkan angka sepuasnya: ");
                 intNumber = sn.nextInt();
                 intTotal += intNumber;
-
-            } catch (Exception e) {
-                System.out.println("masuk kesini");
-                System.out.println("Jumlah: " + intTotal);
-                isAgain = false;
             }
+        } catch (Exception e) {
+            System.out.println("masuk kesini");
+            System.out.println("Jumlah: " + intTotal);
+//            System.out.println(e.getLocalizedMessage()+e.getMessage());
+//            e.printStackTrace();
+        }finally {
+            sn.close();
         }
-        sn.close();
+
+
         }
     }
