@@ -1,9 +1,7 @@
 package com.bcafinance.gjwaspringbootjpa.repos;
 
-import com.bcafinance.gjwaspringbootjpa.models.Customers;
 import com.bcafinance.gjwaspringbootjpa.models.Movies;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
