@@ -16,6 +16,7 @@ Version 1.0
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -34,6 +35,7 @@ public class Movies {
     @Column(name = "Budget", nullable = true)
     private long budget;
 
+//    @NotNull(message = "jangan sampai null yee") // ini pesan kalo inputannya null
     @Column(name = "ReleaseDate",nullable = true)
     private Date releaseDate;
 
