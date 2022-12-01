@@ -55,4 +55,7 @@ public class ConstantMessage {
     public final static String ERROR_MOVIE_INVALID = "DATA MOVIE TIDAK VALID";
     public final static String WARNING_MOVIE_NOT_FOUND = "MOVIE BELUM TERDAFTAR";
 
+    public final static String WARNING_RATING_INVALID = "RATING TIDAK BOLEH LEBIH DARI 10";
+    public final static String WARNING_RUNTIME_INVALID = "RUNTIME TIDAK BOLEH KURANG DARI 1 MENIT";
+
 }

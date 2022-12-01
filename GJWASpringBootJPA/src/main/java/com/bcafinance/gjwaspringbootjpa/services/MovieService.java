@@ -104,18 +104,18 @@ public class MovieService {
             movies.setBudget(m.getBudget()); //BERARTI ADA PERUBAHAN DI SINI
         }
 
-        if (m.getReleaseDate().toString() != null &&
+        if (m.getReleaseDate() != null &&
                 !m.getReleaseDate().toString().equals("") &&
                 !Objects.equals(movies.getReleaseDate().toString(), m.getReleaseDate().toString())) {
 
             // FormatValidation.emailFormatValidation(m.getTitle());
 
-            Optional<Movies> mBeanOptional = movieRepo.findByTitle(m.getTitle());
+           // Optional<Movies> mBeanOptional = movieRepo.findByTitle(m.getTitle());
 //            if (mBeanOptional.isPresent())//it means if exists
 //            {
 //                throw new ResourceNotFoundException(ConstantMessage.WARNING_EMAIL_EXIST);
 //            }
-            movies.setTitle(m.getTitle());
+            movies.setReleaseDate(m.getReleaseDate());
         }
 
         if (m.getRevenue() != 0
@@ -124,13 +124,23 @@ public class MovieService {
         }
 
         if (m.getRating() != 0 &&
-                m.getRevenue() == movies.getRevenue()) {
+                m.getRating() != movies.getRating()) { //validasi Rating tidak boleh lebih dari rating 10
 //            FormatValidation.phoneNumberFormatValidation(m.1getPhoneNumber());
+            //Optional<Movies> mBeanOptional = movieRepo.findByRating(m.getRating());
+
+            if (m.getRating()>10)//it means if exists
+           {
+               throw new ResourceNotFoundException(ConstantMessage.WARNING_RATING_INVALID);
+          }
             movies.setRating(m.getRating());
         }
-        if (m.getRuntime() != 0 &&
-                m.getRuntime() < 1 //validasi runtime movie harus lebih dari 1 menit
-                && m.getRuntime() == movies.getRuntime()) {
+        if (
+                //validasi runtime movie harus lebih dari 1 menit
+                m.getRuntime() != movies.getRuntime()) {
+            if (m.getRuntime()<1)//it means if exists
+            {
+                throw new ResourceNotFoundException(ConstantMessage.WARNING_RUNTIME_INVALID);
+            }
             movies.setRuntime(m.getRuntime());
         }
     }

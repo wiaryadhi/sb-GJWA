@@ -13,6 +13,8 @@ public interface MovieRepo extends JpaRepository<Movies,Long> {
 
     Optional<Movies> findByTitle(String title);
 
+    Optional<Movies> findByRating(double rating);
+
 
     @Override
     List<Movies> findAll();

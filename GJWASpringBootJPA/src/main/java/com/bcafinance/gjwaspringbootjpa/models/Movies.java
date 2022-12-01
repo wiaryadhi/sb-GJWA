@@ -31,23 +31,23 @@ public class Movies {
     @Column(name = "Title",length = 50,nullable = false)
     private String title;
 
-    @Column(name = "Budget", nullable = false)
+    @Column(name = "Budget", nullable = true)
     private long budget;
 
-    @Column(name = "ReleaseDate",nullable = false)
+    @Column(name = "ReleaseDate",nullable = true)
     private Date releaseDate;
 
-    @Column(name = "Revenue",nullable = false)
+    @Column(name = "Revenue",nullable = true)
     private long revenue;
 
-    @Column(name = "Runtime",nullable = false)
+    @Column(name = "Runtime",nullable = true)
     private int runtime;
 
-    @Column(name = "Rating",nullable = false)
+    @Column(name = "Rating",nullable = true)
     private double rating;
 
     @Column(name = "CreatedBy",nullable = false)
-    private String createdBy = "1";
+    private String createdBy = "Arya";
 
     @Column(name = "CreatedDate",nullable = false)
     private Date createdDate = new Date();//JANGAN GUNAKAN columnDefinition untuk set default kolom, langsung set di variabel nya saja.
