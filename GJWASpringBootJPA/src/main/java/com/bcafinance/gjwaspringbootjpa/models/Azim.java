@@ -4,22 +4,23 @@ import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "MstCustomers")
-public class Customers {
+@Table(name="MstHue")
+public class Azim {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CustomerID")
     private Long id;
 
+    @Email(message = ConstantMessage.ERROR_EMAIL_FORMAT_INVALID)
     @NotEmpty(message = ConstantMessage.WARNING_CUST_EMAIL_MANDATORY)
     @Column(name = "Email",length = 50 ,nullable = false,unique = true)
     private String email;
@@ -32,20 +33,11 @@ public class Customers {
     @Column(name = "FirstName",length = 20,nullable = false)
     private String firstName;
 
-    @Column(name = "MiddleName",length = 20,nullable = true)
-    private String middleName;
+    @NotNull(message = "TANGGAL TIDAK BOLEH NULL")
+    private LocalDate localDate;
 
-    @Column(name = "LastName",length = 20,nullable = true)
-    private String lastName;
-
-    @Column(name = "Address", nullable = true)
-    private String address;
-    @NotNull(message = ConstantMessage.WARNING_CUST_BIRTHDATE_MANDATORY)
-    @Column(name = "BirthDate",nullable = false)
-    private LocalDate birthDate;
-
-    @Transient//tidak akan menggenerate kolom di tabel
-    private short age;//Menggunakan Object Integer karena nilai return dari Period.between adalah Integer
+    @NotNull(message = "DATA INTEGER TIDAK BOLEH NULL")
+    private Double dataInteger;
 
     @Column(name = "CreatedBy",nullable = false)
     private String createdBy = "1";
@@ -63,10 +55,6 @@ public class Customers {
     @Column(name = "IsActive",nullable = false)
     private boolean isActive = true;
 
-    public Customers() {
-    }
-
-    public short getAge() {
-        return (short) Period.between(this.birthDate,LocalDate.now()).getYears();//dikonversi ke short dari Integer
+    public Azim() {
     }
 }

@@ -16,7 +16,7 @@ Version 1.0
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -40,7 +40,7 @@ public class Movies {
 
 //    @NotNull(message = "jangan sampai null yee") // ini pesan kalo inputannya null
     @Column(name = "ReleaseDate",nullable = true)
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     @Column(name = "Revenue",nullable = true)
     private long revenue;

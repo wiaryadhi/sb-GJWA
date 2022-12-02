@@ -39,7 +39,7 @@ public class MovieService {
     public Movies findByTitleMovies(String title) throws Exception {
 
         return movieRepo.findByTitle(title).orElseThrow(() ->
-                new ResourceNotFoundException(ConstantMessage.WARNING_CUSTOMER_NOT_FOUND));
+                new ResourceNotFoundException(ConstantMessage.WARNING_MOVIE_NOT_FOUND));
     }
 
     public List<Movies> findByTitleMovieLike(String title) throws Exception {

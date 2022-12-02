@@ -6,11 +6,13 @@ import com.bcafinance.gjwaspringbootjpa.models.Customers;
 import com.bcafinance.gjwaspringbootjpa.services.CustomerService;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import lombok.Getter;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,10 +21,8 @@ public class CustomerController {
 
     @Getter
     private CustomerService customerService;
-
-
-    public CustomerController() {
-    }
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     public CustomerController(CustomerService customerService) {
@@ -31,9 +31,7 @@ public class CustomerController {
 
     @PostMapping("/v1/customers")
     public ResponseEntity<Object>
-    saveCustomer(@RequestBody Customers customers) throws Exception {
-
-        if(customers==null)throw new ResourceNotFoundException(ConstantMessage.ERROR_NO_CONTENT);
+    saveCustomer(@Valid @RequestBody Customers customers) throws Exception {
         customerService.saveCustomers(customers);
         return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_SAVE,HttpStatus.CREATED,null,null,null);
     }
@@ -56,7 +54,7 @@ public class CustomerController {
     @GetMapping("/v1/customers/datas/all/0")
     public ResponseEntity<Object> findAllCustomers()throws Exception{
 
-        int data = 0;
+//        int data = 0;
         List<Customers> lsCustomers = customerService.findAllCustomers();
 
         if(lsCustomers.size()==0)
@@ -75,18 +73,11 @@ public class CustomerController {
                 generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,customerService.findByEmailCustomers(email),null,null);
     }
 
-    @PutMapping("/v1/customers/t")
-    public ResponseEntity<Object> updateCustomerByID(@RequestBody Customers customers)throws Exception{
+    @PutMapping("/v1/customers/u")
+//    public ResponseEntity<Object> updateCustomerByID(@Valid @RequestBody Customers customers)throws Exception{
+    public ResponseEntity<Object> updateCustomerByID(@Valid @RequestBody Customers customers)throws Exception{
         customerService.updateCustomerById(customers);
         return new ResponseHandler().
                 generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,"",null,null);
     }
-
-    @PutMapping("/v2/customers/t")
-    public ResponseEntity<Object> updateCustomerByIDV2(@RequestBody Customers customers)throws Exception{
-        customerService.updateCustomerByIdV2(customers);
-        return new ResponseHandler().
-                generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,"",null,null);
-    }
-
 }

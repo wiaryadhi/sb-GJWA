@@ -2,14 +2,15 @@ package com.bcafinance.gjwaspringbootjpa.services;
 
 import com.bcafinance.gjwaspringbootjpa.handler.ResourceNotFoundException;
 import com.bcafinance.gjwaspringbootjpa.models.Products;
+import com.bcafinance.gjwaspringbootjpa.models.Suppliers;
 import com.bcafinance.gjwaspringbootjpa.repos.ProductRepo;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -27,8 +28,6 @@ public class ProductService {
     }
 
     public void saveProduct(Products products) throws Exception{
-        if(products.getDescription()==null)throw new DataIntegrityViolationException(ConstantMessage.ERROR_DATA_INVALID);
-        if(products.getName()==null)throw new DataIntegrityViolationException(ConstantMessage.ERROR_DATA_INVALID);
 
         productRepo.save(products);
     }
@@ -48,21 +47,11 @@ public class ProductService {
 
     public Products findByNameProduct(String name) throws Exception
     {
-        List<Products> lsTest = productRepo.searchByNameStartsWith(name);
-        for(int i=0;i<lsTest.size();i++)
-        {
-            System.out.println(lsTest.get(i).getName());
-            System.out.println(lsTest.get(i).getId());
-            System.out.println(lsTest.get(i).getPrice());
-            System.out.println(lsTest.get(i).getDescription());
-            System.out.println();
-
-        }
         return productRepo.findProductByName(name).orElseThrow(()->
                 new ResourceNotFoundException(ConstantMessage.WARNING_PRODUCT_NOT_FOUND));
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public void updateProducts(Products p) throws Exception{
 
         Products products = productRepo.findById(p.getId()).orElseThrow(()->
@@ -88,5 +77,18 @@ public class ProductService {
         {
             throw new ResourceNotFoundException(ConstantMessage.WARNING_PRODUCT_PRICE_SOP);
         }
+    }
+
+    public void addSupplier(Suppliers suppliers,Long productId) throws Exception {
+        Products products = productRepo.findById(productId).
+                orElseThrow(() -> new ResourceNotFoundException(ConstantMessage.WARNING_PRODUCT_NOT_FOUND));
+        products.getSuppliers().add(suppliers);
+        saveProduct(products);
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    public void saveAllProduct(List<Products> ls)
+    {
+        productRepo.saveAll(ls);
     }
 }

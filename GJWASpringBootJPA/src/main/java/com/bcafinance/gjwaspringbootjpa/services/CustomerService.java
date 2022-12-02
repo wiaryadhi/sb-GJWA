@@ -7,10 +7,10 @@ import com.bcafinance.gjwaspringbootjpa.models.Customers;
 import com.bcafinance.gjwaspringbootjpa.repos.CustomerRepo;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -47,11 +47,6 @@ public class CustomerService {
 
     public void saveCustomers(Customers customers) throws Exception
     {
-        if(customers.getEmail()==null)throw new DataIntegrityViolationException(ConstantMessage.ERROR_DATA_INVALID);
-        if(customers.getBirthDate()==null)throw new DataIntegrityViolationException(ConstantMessage.ERROR_DATA_INVALID);
-        if(customers.getFirstName()==null)throw new DataIntegrityViolationException(ConstantMessage.ERROR_DATA_INVALID);
-        if(customers.getPhoneNumber()==null)throw new DataIntegrityViolationException(ConstantMessage.ERROR_DATA_INVALID);
-
         FormatValidation.phoneNumberFormatValidation(customers.getPhoneNumber());
         FormatValidation.emailFormatValidation(customers.getEmail());
         FormatValidation.dateFormatYYYYMMDDValidation(customers.getBirthDate().toString());
@@ -64,7 +59,7 @@ public class CustomerService {
         customerRepo.save(customers);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public void updateCustomerById(Customers c) throws Exception{
 
         Customers customers = customerRepo.findById(c.getId()).orElseThrow(()->
@@ -72,27 +67,16 @@ public class CustomerService {
 
         customers.setModifiedBy("1");
         customers.setModifiedDate(new Date());
-        if(c.getFirstName() != null
-                && !Objects.equals(customers.getFirstName(),c.getFirstName())
-                && !c.getFirstName().equals(""))
-        {
-            customers.setFirstName(c.getFirstName());//BERARTI ADA PERUBAHAN DI SINI
-        }
-
+        customers.setFirstName(c.getFirstName());//BERARTI ADA PERUBAHAN DI SINI
         if(c.getMiddleName() != null
-                && !Objects.equals(customers.getMiddleName(),c.getMiddleName())
                 && !c.getMiddleName().equals(""))
         {
             customers.setMiddleName(c.getMiddleName());//BERARTI ADA PERUBAHAN DI SINI
         }
 
-        if(c.getEmail() != null &&
-                c.getEmail().length()>0 &&
-                !Objects.equals(customers.getEmail(),c.getEmail()))
-
+        if(c.getEmail().length()>3 && !Objects.equals(c.getEmail(),customers.getEmail()))
         {
             FormatValidation.emailFormatValidation(c.getEmail());
-
             Optional<Customers> cBeanOptional = customerRepo.findByEmail(c.getEmail());
             if(cBeanOptional.isPresent())//it means if exists
             {
@@ -102,85 +86,19 @@ public class CustomerService {
         }
 
         if(c.getAddress() != null
-                && !Objects.equals(customers.getAddress(),c.getAddress())
                 && !c.getAddress().equals(""))
         {
             customers.setAddress(c.getAddress());//BERARTI ADA PERUBAHAN DI SINI
         }
 
-        if(c.getPhoneNumber() != null &&
-                c.getPhoneNumber().length()>0 &&
+        if(c.getPhoneNumber().length()>9 &&
                 !Objects.equals(customers.getPhoneNumber(),c.getPhoneNumber())){
 
             FormatValidation.phoneNumberFormatValidation(c.getPhoneNumber());
             customers.setPhoneNumber(c.getPhoneNumber());
         }
-        if(c.getBirthDate() != null &&
-                !c.getBirthDate().toString().equals("") &&
-                !Objects.equals(customers.getBirthDate().toString(),c.getBirthDate().toString()))
-        {
-            FormatValidation.dateFormatYYYYMMDDValidation(customers.getBirthDate().toString());
-            customers.setBirthDate(c.getBirthDate());
-        }
-    }
 
-    @Transactional
-    public void updateCustomerByIdV2(Customers c) throws Exception{
-
-        Customers customers = customerRepo.findById(c.getId()).orElseThrow(()->
-                new ResourceNotFoundException(ConstantMessage.WARNING_CUSTOMER_NOT_FOUND));
-
-        customers.setModifiedBy("1");
-        customers.setModifiedDate(new Date());
-        if(c.getFirstName() != null
-                && !Objects.equals(customers.getFirstName(),c.getFirstName())
-                && !c.getFirstName().equals(""))
-        {
-            customers.setFirstName(c.getFirstName());//BERARTI ADA PERUBAHAN DI SINI
-        }
-
-        if(c.getMiddleName() != null
-                && !Objects.equals(customers.getMiddleName(),c.getMiddleName())
-                && !c.getMiddleName().equals(""))
-        {
-            customers.setMiddleName(c.getMiddleName());//BERARTI ADA PERUBAHAN DI SINI
-        }
-
-        if(c.getEmail() != null &&
-                c.getEmail().length()>0 &&
-                !Objects.equals(customers.getEmail(),c.getEmail()))
-
-        {
-            FormatValidation.emailFormatValidation(c.getEmail());
-
-            Optional<Customers> cBeanOptional = customerRepo.findByEmail(c.getEmail());
-            if(cBeanOptional.isPresent())//it means if exists
-            {
-                throw new ResourceNotFoundException(ConstantMessage.WARNING_EMAIL_EXIST);
-            }
-            customers.setEmail(c.getEmail());
-        }
-
-        if(c.getAddress() != null
-                && !Objects.equals(customers.getAddress(),c.getAddress())
-                && !c.getAddress().equals(""))
-        {
-            customers.setAddress(c.getAddress());//BERARTI ADA PERUBAHAN DI SINI
-        }
-
-        if(c.getPhoneNumber() != null &&
-                c.getPhoneNumber().length()>0 &&
-                !Objects.equals(customers.getPhoneNumber(),c.getPhoneNumber())){
-
-            FormatValidation.phoneNumberFormatValidation(c.getPhoneNumber());
-            customers.setPhoneNumber(c.getPhoneNumber());
-        }
-        if(c.getBirthDate() != null &&
-                !c.getBirthDate().toString().equals("") &&
-                !Objects.equals(customers.getBirthDate().toString(),c.getBirthDate().toString()))
-        {
-            FormatValidation.dateFormatYYYYMMDDValidation(customers.getBirthDate().toString());
-            customers.setBirthDate(c.getBirthDate());
-        }
+        FormatValidation.dateFormatYYYYMMDDValidation(customers.getBirthDate().toString());
+        customers.setBirthDate(c.getBirthDate());
     }
 }

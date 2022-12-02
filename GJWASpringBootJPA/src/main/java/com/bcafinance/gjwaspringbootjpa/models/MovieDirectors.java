@@ -3,6 +3,7 @@ package com.bcafinance.gjwaspringbootjpa.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 /*
@@ -32,7 +33,7 @@ public class MovieDirectors {
     private String name;
 
     @Column(name = "Birthdate",nullable = true)
-    private Date birthdate;
+    private LocalDate birthdate;
 
     @Column(name = "CreatedBy",nullable = false)
     private String createdBy = "Arya";

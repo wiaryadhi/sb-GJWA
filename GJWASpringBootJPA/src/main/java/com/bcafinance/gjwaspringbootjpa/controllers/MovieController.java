@@ -12,12 +12,15 @@ Last Modified on 30/11/2022 - 14:25
 Version 1.0
 */
 
+import com.bcafinance.gjwaspringbootjpa.dto.MovieDTO;
 import com.bcafinance.gjwaspringbootjpa.handler.ResourceNotFoundException;
 import com.bcafinance.gjwaspringbootjpa.handler.ResponseHandler;
 import com.bcafinance.gjwaspringbootjpa.models.Movies;
 import com.bcafinance.gjwaspringbootjpa.services.MovieService;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import lombok.Getter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,8 @@ public class MovieController {
     @Getter
     private MovieService movieService;
 
+    @Autowired
+    private ModelMapper modelMapper;
 
     public MovieController() {
     }
@@ -75,6 +80,45 @@ public class MovieController {
         return new ResponseHandler().
                 generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, lsMovies, null, null);
     }
+
+    @GetMapping("/v1/movies/datas/dto/all/uhuy")
+    public ResponseEntity<Object> findAllMoviesDTO()throws Exception{
+
+        List<Movies> lsMovies = movieService.findAllMovies();
+
+        if(lsMovies.size()==0)
+        {
+            throw new ResourceNotFoundException(ConstantMessage.WARNING_DATA_EMPTY);
+        }
+        List<MovieDTO> lsMovieDTO = modelMapper.map(lsMovies, new TypeToken<List<MovieDTO>>() {}.getType());
+
+        return new ResponseHandler().
+                generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,lsMovieDTO,null,null);
+    }
+
+//    @GetMapping("/reseller/datasDTO/all")
+//    public ResponseEntity<Object> findAllResellerDTO()throws Exception{
+//
+//        List<Movies> lsMovies = movieService.findAllMovies();
+//
+//        if(lsMovies.size()==0)
+//        {
+//            throw new ResourceNotFoundException(ConstantMessage.WARNING_DATA_EMPTY);
+//        }
+//        TypeMap<Movies, MovieDTO> propertyMapper = modelMapper.createTypeMap(Movies.class, MovieDTO.class);
+//        propertyMapper.addMappings(
+//                mapper -> mapper.map(src -> src.getMovieDirectors().getName(), MovieDTO::setName)
+//        );
+//
+////        propertyMapper.addMappings(
+////                mapper -> mapper.map(src -> src.getBusinessType().getBusinessTypeDescription(), ResellerDTO::setBusinessTypeDescription)
+////        );
+//
+//        List<MovieDTO> lsResellerDTO = modelMapper.map(lsMovies, new TypeToken<List<MovieDTO>>() {}.getType());
+//
+//        return new ResponseHandler().
+//                generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,lsResellerDTO,null,null);
+//}
 
     @GetMapping("/v1/movies/datas/search/{title}")
     public ResponseEntity<Object> getMovieByTitle(@PathVariable("title") String title) throws Exception {

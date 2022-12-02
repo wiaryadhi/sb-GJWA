@@ -1,7 +1,9 @@
 package com.bcafinance.gjwaspringbootjpa.models;
 
+
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -12,50 +14,58 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "MstCustomers")
-public class Customers {
+@Table(name = "MstEmployee")
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CustomerID")
+    @Column(name = "EmployeeID")
     private Long id;
 
-    @NotEmpty(message = ConstantMessage.WARNING_CUST_EMAIL_MANDATORY)
+    @ManyToOne
+    private Division division;
+
+    @Length(message = ConstantMessage.WARNING_EMPL_MAX_LENGTH_EMAIL)
+    @NotEmpty(message = ConstantMessage.WARNING_EMPL_EMAIL_MANDATORY)
     @Column(name = "Email",length = 50 ,nullable = false,unique = true)
     private String email;
 
-    @NotEmpty(message = ConstantMessage.WARNING_CUST_PH_NUMBER_MANDATORY)
+    @Length(message = ConstantMessage.WARNING_EMPL_MAX_LENGTH_PHONE)
+    @NotEmpty(message = ConstantMessage.WARNING_EMPL_PH_NUMBER_MANDATORY)
     @Column(name = "PhoneNumber", length = 16, nullable = false, unique = true)
     private String phoneNumber;
 
-    @NotEmpty(message = ConstantMessage.WARNING_CUST_FIRSTNAME_MANDATORY)
+    @Length(max = 20, message = ConstantMessage.WARNING_EMPL_MAX_LENGTH_FIRSTNAME)
+    @NotEmpty(message = ConstantMessage.WARNING_EMPL_FIRSTNAME_MANDATORY)
     @Column(name = "FirstName",length = 20,nullable = false)
     private String firstName;
 
+    @Length(max = 20, message = ConstantMessage.WARNING_EMPL_MAX_LENGTH_MIDDLENAME)
     @Column(name = "MiddleName",length = 20,nullable = true)
     private String middleName;
 
+    @Length(max = 20, message = ConstantMessage.WARNING_EMPL_MAX_LENGTH_LASTNAME)
     @Column(name = "LastName",length = 20,nullable = true)
     private String lastName;
 
+    @Length(max = 20, message = ConstantMessage.WARNING_EMPL_ADDRESS_MAX_LENGTH)
     @Column(name = "Address", nullable = true)
     private String address;
-    @NotNull(message = ConstantMessage.WARNING_CUST_BIRTHDATE_MANDATORY)
+    @NotNull(message = ConstantMessage.WARNING_EMPL_BIRTHDATE_MANDATORY)
     @Column(name = "BirthDate",nullable = false)
     private LocalDate birthDate;
 
-    @Transient//tidak akan menggenerate kolom di tabel
-    private short age;//Menggunakan Object Integer karena nilai return dari Period.between adalah Integer
+    @Transient
+    private Integer age;
 
     @Column(name = "CreatedBy",nullable = false)
     private String createdBy = "1";
 
-    //    @Column(name = "CreatedDate",nullable = true, columnDefinition = "datetime2(7) DEFAULT GETDATE() ")
     @Column(name = "CreatedDate",nullable = false)
-    private Date createdDate = new Date();//JANGAN GUNAKAN columnDefinition untuk set default kolom, langsung set di variabel nya saja.
+    private Date createdDate = new Date();
 
     @Column(name = "ModifiedBy",nullable = true)
-    private String modifiedBy ;
+    private String modifiedBy;
 
     @Column(name = "ModifiedDate",nullable = true)
     private Date modifiedDate;
@@ -63,10 +73,7 @@ public class Customers {
     @Column(name = "IsActive",nullable = false)
     private boolean isActive = true;
 
-    public Customers() {
-    }
-
-    public short getAge() {
-        return (short) Period.between(this.birthDate,LocalDate.now()).getYears();//dikonversi ke short dari Integer
+    public Integer getAge() {
+        return Period.between(this.birthDate,LocalDate.now()).getYears();//dikonversi ke short dari Integer
     }
 }

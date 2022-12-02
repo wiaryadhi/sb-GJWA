@@ -26,15 +26,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	private List<ApiValidationError> lsSubError = new ArrayList<ApiValidationError>();
 
 	@Override
-	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)/*UNTUK WEBSOCKET ATAU PROTOCOL LAIN SELAIN HTTP*/
+	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 																  HttpHeaders headers,
 																  HttpStatus status,
 																  WebRequest request) {
 		lsSubError.clear();
 		for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-			lsSubError.add(new ApiValidationError(fieldError.getField(),fieldError.getDefaultMessage()));
+
+
+			lsSubError.add(new ApiValidationError(fieldError.getField(),fieldError.getDefaultMessage(),fieldError.getRejectedValue(),fieldError.getObjectName()));
 		}
+
 		ApiError apiError =
 				new ApiError(HttpStatus.UNPROCESSABLE_ENTITY,ConstantMessage.ERROR_UNPROCCESSABLE,ex,request.getDescription(false),"00001");
 		apiError.setSubErrors(lsSubError);

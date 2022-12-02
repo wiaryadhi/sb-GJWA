@@ -2,12 +2,10 @@ package com.bcafinance.gjwaspringbootjpa.services;
 
 import com.bcafinance.gjwaspringbootjpa.handler.ResourceNotFoundException;
 import com.bcafinance.gjwaspringbootjpa.models.MovieDirectors;
-import com.bcafinance.gjwaspringbootjpa.models.Movies;
 import com.bcafinance.gjwaspringbootjpa.repos.MovieDirectorRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;

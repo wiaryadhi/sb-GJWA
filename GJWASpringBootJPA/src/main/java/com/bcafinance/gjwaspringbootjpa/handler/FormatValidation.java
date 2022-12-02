@@ -35,6 +35,25 @@ public class FormatValidation {
         {
             throw new ResourceNotFoundException(ConstantMessage.ERROR_DATE_FORMAT_YYYYMMDD);
         }
-//        REGEX_DATE_YYYYMMDD
     }
+
+//    public static boolean numericValidation(Object a)
+//    {
+//        if(a instanceof Double)if((Double)a==0.0)return false;
+//        else if (a instanceof Integer)if((Integer)a==0)return false;
+//        else if (a instanceof Float)if((Float)a==0.0)return false;
+//        else if (a instanceof Long)if((Long)a==0) return false;
+//        else if (a instanceof Short)if((Short)a==0) return false;
+//        else if (a instanceof Byte)if((Byte)a==0) return false;
+//
+//        String x = a.toString();
+//        if(x.equals("0.0") || x.equals("0"))return false;
+//
+//        int intK = 0123;
+//        if(x.startsWith("0"))return false;
+//
+//
+//
+//        return true;
+//    }
 }

@@ -16,13 +16,11 @@ public interface ProductRepo extends CrudRepository<Products,Long> {
 
 //    List<Products> ProductsRepository.findByNameEndsWith("Burton");
 //    List<Products> findByNameNotContaining(String name);
-
+//    List<Products> findByNameNotContaining(String name);
 //    @Query("SELECT p FROM Products p WHERE p.description LIKE %:description%")
 //    List<Products> searchByDescriptionLike(@Param("description") String description);
-
 //    @Query("SELECT p FROM Products p WHERE p.name LIKE ?1%")
 //    List<Products> findByNameNotLike(String name);
-
 //    @Query("SELECT p FROM Products p WHERE p.name LIKE ?1%")
 //    List<Products> searchByNameStartsWith(String name);
 //    @Query("SELECT p FROM Products p WHERE p.Name LIKE %?#{escape([0])} escape ?#{escapeCharacter()}")

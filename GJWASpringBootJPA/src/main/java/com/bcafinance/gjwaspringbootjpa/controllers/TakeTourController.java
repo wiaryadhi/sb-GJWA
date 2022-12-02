@@ -2,15 +2,25 @@ package com.bcafinance.gjwaspringbootjpa.controllers;
 
 
 import com.bcafinance.gjwaspringbootjpa.configuration.ConfigProperties;
+import com.bcafinance.gjwaspringbootjpa.core.SMTPCore;
+import com.bcafinance.gjwaspringbootjpa.handler.ResponseHandler;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.bcafinance.gjwaspringbootjpa.utils.ReadTextFileSB;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/taketour")
 public class TakeTourController {
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     @GetMapping("/welcome")
     public String getTakeTour(){
@@ -23,9 +33,21 @@ public class TakeTourController {
     }
 
     @GetMapping("/runnerz")
-    public String executionClass(){
+    public ResponseEntity<Object> executionClass(@RequestBody List<String> lsEmail) throws Exception {
+        String[] strArr = new String[lsEmail.size()];
 
+        for(int i=0;i<strArr.length;i++)
+        {
+            strArr[i] = lsEmail.get(i);
+//            System.out.println("EMAIL KE - "+i+" : "+lsEmail.get(i));
+        }
+        System.out.println(System.getProperty("user.dir"));
+        SMTPCore sc = new SMTPCore();
         ConfigProperties.getEmailPassword();
-        return "OK";
+        System.out.println(sc.sendMailWithAttachment(strArr,
+                "INI HANYA TEST",new ReadTextFileSB("\\data\\template-BCAF.html").getContentFile(),
+                "SSL",
+                new String[] {ResourceUtils.getFile("classpath:\\data\\sample.docx").getAbsolutePath()}));
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_SEND_EMAIL, HttpStatus.CREATED,null,null,null);
     }
 }

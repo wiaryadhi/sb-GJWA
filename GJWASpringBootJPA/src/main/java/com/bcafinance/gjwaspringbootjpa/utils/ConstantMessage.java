@@ -23,6 +23,7 @@ public class ConstantMessage {
 
     /*Global*/
     public final static String SUCCESS_SAVE = "DATA BERHASIL DIBUAT";
+    public final static String SUCCESS_SEND_EMAIL = "SILAHKAN CEK EMAIL YANG TELAH ANDA DAFTARKAN";
     public final static String SUCCESS_FIND_BY = "OK";
     public final static String WARNING_NOT_FOUND = "DATA TIDAK DITEMUKAN";
     public final static String WARNING_DATA_EMPTY = "DATA TIDAK ADA";
@@ -40,22 +41,62 @@ public class ConstantMessage {
     public final static String ERROR_NO_CONTENT = "PERMINTAAN TIDAK DAPAT DIPROSES";
     public final static String WELCOME_MESSAGE = "This is Springboot BootCamp BCAF BATCH 1";
     public final static String TAKE_TOUR = "Ready To Start";
+    public final static String WARNING_EMAIL_EXIST = "EMAIL SUDAH TERDAFTAR";
 
     /*Customer*/
-    public final static String SUCCESS = "";
-    public final static String ERROR = "";
-    public final static String WARNING_EMAIL_EXIST = "EMAIL SUDAH TERDAFTAR";
+
+    public final static String WARNING_CUST_EMAIL_MANDATORY = "EMAIL WAJIB DIISI";
+    public final static String WARNING_CUST_PH_NUMBER_MANDATORY = "NOMOR HANDPHONE WAJIB DIISI";
+    public final static String WARNING_CUST_FIRSTNAME_MANDATORY = "NAMA AWAL WAJIB DIISI";
+    public final static String WARNING_CUST_ADDRESS_MAX_LENGTH = "MAKSIMAL ALAMAT 255 KARAKTER";
+    public final static String WARNING_CUST_MAX_LENGTH_FIRSTNAME = "MAKSIMAL NAMA AWAL 20 KARAKTER";
+    public final static String WARNING_CUST_MAX_LENGTH_MIDDLENAME = "MAKSIMAL NAMA TENGAH 20 KARAKTER";
+    public final static String WARNING_CUST_MAX_LENGTH_LASTNAME = "MAKSIMAL NAMA AKHIR 20 KARAKTER";
+    public final static String WARNING_CUST_BIRTHDATE_MANDATORY = "TANGGAL-BULAN-TAHUN LAHIR WAJIB DIISI";
     public final static String WARNING_CUSTOMER_NOT_FOUND = "CUSTOMER BELUM TERDAFTAR";
 
     /*Products*/
     public final static String WARNING_PRODUCT_NOT_FOUND = "PRODUK TIDAK DITEMUKAN";
+    public final static String WARNING_PROD_NAME_MANDATORY = "NAMA PRODUK WAJIB DIISI";
+    public final static String WARNING_PROD_DESC_MANDATORY = "DESKRIPSI PRODUK WAJIB DIISI";
+    public final static String WARNING_PROD_PRICE_MANDATORY = "HARGA PRODUK WAJIB DIISI";
     public final static String WARNING_PRODUCT_PRICE_SOP = "HARGA TIDAK BOLEH 1/2 ATAU 3 KALI DARI HARGA SEBELUMNYA";
 
-    /*Movies*/
-    public final static String ERROR_MOVIE_INVALID = "DATA MOVIE TIDAK VALID";
-    public final static String WARNING_MOVIE_NOT_FOUND = "MOVIE BELUM TERDAFTAR";
+    /*SupplierRepo*/
+    public final static String WARNING_SUPPLIER_NAME_MANDATORY = "NAMA SUPPLIER WAJIB DIISI";
+    public final static String WARNING_SUPPLIER_DESC_MANDATORY = "DESKRIPSI SUPPLIER WAJIB DIISI";
+    public final static String WARNING_SUPPLIER_EMAIL_MANDATORY = "EMAIL SUPPLIER WAJIB DIISI";
 
-    public final static String WARNING_RATING_INVALID = "RATING TIDAK BOLEH LEBIH DARI 10";
-    public final static String WARNING_RUNTIME_INVALID = "RUNTIME TIDAK BOLEH KURANG DARI 1 MENIT";
+    /*ProductCategory*/
+    public final static String WARNING_PROD_CATEG_NAME_MANDATORY = "NAMA PRODUK KATEGORI WAJIB DIISI";
+    public final static String WARNING_PROD_CATEG_DESC_MANDATORY = "DESKRIPSI PRODUK KATEGORI WAJIB DIISI";
+
+
+    /*Customers*/
+    public final static String WARNING_EMPL_EMAIL_MANDATORY = "EMAIL WAJIB DIISI";
+    public final static String WARNING_EMPL_PH_NUMBER_MANDATORY = "NOMOR HANDPHONE WAJIB DIISI";
+    public final static String WARNING_EMPL_FIRSTNAME_MANDATORY = "NAMA AWAL WAJIB DIISI";
+    public final static String WARNING_EMPL_ADDRESS_MAX_LENGTH = "MAKSIMAL ALAMAT 255 KARAKTER";
+
+    public final static String WARNING_EMPL_MAX_LENGTH_FIRSTNAME = "MAKSIMAL NAMA AWAL 50 KARAKTER";
+    public final static String WARNING_EMPL_MAX_LENGTH_MIDDLENAME = "MAKSIMAL NAMA TENGAH 50 KARAKTER";
+    public final static String WARNING_EMPL_MAX_LENGTH_LASTNAME = "MAKSIMAL NAMA AKHIR 50 KARAKTER";
+    public final static String WARNING_EMPL_MAX_LENGTH_EMAIL = "MAKSIMAL EMAIL 50 KARAKTER";
+    public final static String WARNING_EMPL_MAX_LENGTH_PHONE = "MAKSIMAL NOMOR HANDPHONE 50 KARAKTER";
+    public final static String WARNING_EMPL_BIRTHDATE_MANDATORY = "TANGGAL-BULAN-TAHUN LAHIR WAJIB DIISI";
+    public final static String WARNING_EMPL_NOT_FOUND = "KARYAWAN BELUM TERDAFTAR";
+
+    /*ProductCategory*/
+    public final static String WARNING_DIVISION_NAME_MANDATORY = "NAMA DIVISI WAJIB DIISI";
+    public final static String WARNING_DIVISION_NAME_LENGTH = "NAMA DIVISI MAKSIMAL 50 KARAKTER";
+    public final static String WARNING_DIVISION_DESC_MANDATORY = "DESKRIPSI DIVISI WAJIB DIISI";
+
+    /*Movie*/
+
+    public final static  String WARNING_MOVIE_NOT_FOUND = "JUDUL MOVIE TIDAK DITEMUKAN";
+    public final static  String ERROR_MOVIE_INVALID = "JUDUL TIDAK BOLEH KOSONG";
+    public final static  String WARNING_RATING_INVALID = "RATING TIDAK BOLEH LEBIH DARI 10";
+    public final static  String WARNING_RUNTIME_INVALID = "RUNTIME TIDAK BOLEH KURANG DARI 1 MENIT";
+
 
 }

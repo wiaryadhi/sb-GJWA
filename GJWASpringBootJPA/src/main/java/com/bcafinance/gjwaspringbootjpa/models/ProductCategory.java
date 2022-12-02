@@ -1,49 +1,38 @@
 package com.bcafinance.gjwaspringbootjpa.models;
 
+
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 //@Data
 @Entity
-@Table(name = "MstProduct")
-public class Products implements Serializable {
-
-    private static final long serialversionUID = 1L;
+@Table(name = "MstProductCategory")
+public class ProductCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ProductID")
+    @Column(name = "ProductCategoryID")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ProductCategoryID")
-    private ProductCategory productCategory;
-
-    @NotEmpty(message = ConstantMessage.WARNING_PROD_NAME_MANDATORY)
-    @Column(name = "ProductName",length = 50,nullable = false,unique = true)
+    @NotEmpty(message = ConstantMessage.WARNING_PROD_CATEG_NAME_MANDATORY)
+    @Column(name = "ProductCategoryName",length = 50,nullable = false)
     private String name;
 
-    @NotEmpty(message = ConstantMessage.WARNING_PROD_NAME_MANDATORY)
-    @Column(name = "ProductDescription",length = 255,nullable = false)
+    @NotEmpty(message = ConstantMessage.WARNING_PROD_CATEG_DESC_MANDATORY)
+    @Column(name = "ProductCategoryDescription",length = 255,nullable = false)
     private String description;
-
-    @NotNull(message = ConstantMessage.WARNING_PROD_PRICE_MANDATORY)
-    @Column(name = "Price",nullable = false)
-    private Double price;
 
     @Column(name = "CreatedBy",nullable = false)
     private String createdBy = "1";
 
+//    @OneToMany
+//    private List<Products> products;
+
     @Column(name = "CreatedDate",nullable = false)
-    private Date createdDate = new Date();//JANGAN GUNAKAN columnDefinition untuk set default kolom, langsung set di variabel nya saja.
+    private Date createdDate = new Date();
 
     @Column(name = "ModifiedBy",nullable = true)
     private String modifiedBy ;
@@ -54,29 +43,12 @@ public class Products implements Serializable {
     @Column(name = "IsActive",nullable = false)
     private boolean isActive = true;
 
-    @ManyToMany
-    @JoinTable(
-            name = "ProductSupplier",
-            joinColumns = @JoinColumn(name="ProductID",referencedColumnName = "ProductID"),
-            inverseJoinColumns = @JoinColumn(name = "SupplierID",referencedColumnName = "SupplierID")
-    )
-    @JsonManagedReference
-    private Set<Suppliers> suppliers = new HashSet<Suppliers>();
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ProductCategory getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
     }
 
     public String getName() {
@@ -93,14 +65,6 @@ public class Products implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public String getCreatedBy() {
@@ -141,13 +105,5 @@ public class Products implements Serializable {
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public Set<Suppliers> getSuppliers() {
-        return suppliers;
-    }
-
-    public void setSuppliers(Set<Suppliers> suppliers) {
-        this.suppliers = suppliers;
     }
 }

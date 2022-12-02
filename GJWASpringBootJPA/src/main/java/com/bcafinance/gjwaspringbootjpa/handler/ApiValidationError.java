@@ -1,20 +1,19 @@
 package com.bcafinance.gjwaspringbootjpa.handler;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor
 class ApiValidationError {
     private String object;
     private String field;
     private Object rejectedValue;
     private String message;
 
-    ApiValidationError(String object, String message) {
+    ApiValidationError(String field, String message,Object rejectedValue,String object) {
+
         this.object = object;
         this.message = message;
+        this.rejectedValue=rejectedValue;
+        this.field = field;
     }
 }

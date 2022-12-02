@@ -11,12 +11,11 @@ Created on 01/12/2022 - 15:19
 Last Modified on 01/12/2022 - 15:19
 Version 1.0
 */
+
 import com.bcafinance.gjwaspringbootjpa.handler.ResourceNotFoundException;
 import com.bcafinance.gjwaspringbootjpa.handler.ResponseHandler;
 import com.bcafinance.gjwaspringbootjpa.models.MovieDirectors;
-import com.bcafinance.gjwaspringbootjpa.models.Movies;
 import com.bcafinance.gjwaspringbootjpa.services.MovieDirectorService;
-import com.bcafinance.gjwaspringbootjpa.services.MovieService;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,7 @@ public class MovieDirectorController {
         }
     }
 
-    @GetMapping("/v1/moviedirectorss/datas/all/0")
+    @GetMapping("/v1/moviedirectors/datas/all/0")
     public ResponseEntity<Object> findAllMovieDirectors() throws Exception {
 
         int data = 0;
