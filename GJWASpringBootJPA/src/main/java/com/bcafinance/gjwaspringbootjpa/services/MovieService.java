@@ -71,16 +71,9 @@ public class MovieService {
 //        if(movies.getRevenue()==null)throw new DataIntegrityViolationException(ConstantMessage.ERROR_DATA_INVALID);
 //        if(movies.getRating()==null)throw new DataIntegrityViolationException(ConstantMessage.ERROR_DATA_INVALID);
 
-        // tidak melakukan validasi karena
-//        FormatValidation.phoneNumberFormatValidation(customers.getPhoneNumber());
-//        FormatValidation.emailFormatValidation(customers.getEmail());
-//        FormatValidation.dateFormatYYYYMMDDValidation(customers.getBirthDate().toString());
 
         Optional<Movies> moviesByTitle = movieRepo.findByTitle(movies.getTitle());
-//        if (moviesByTitle.isPresent())
-//        {
-//            throw new ResourceNotFoundException(ConstantMessage.WARNING_EMAIL_EXIST);
-//        }
+
         movieRepo.save(movies);
     }
 
@@ -108,13 +101,6 @@ public class MovieService {
                 !m.getReleaseDate().toString().equals("") &&
                 !Objects.equals(movies.getReleaseDate().toString(), m.getReleaseDate().toString())) {
 
-            // FormatValidation.emailFormatValidation(m.getTitle());
-
-           // Optional<Movies> mBeanOptional = movieRepo.findByTitle(m.getTitle());
-//            if (mBeanOptional.isPresent())//it means if exists
-//            {
-//                throw new ResourceNotFoundException(ConstantMessage.WARNING_EMAIL_EXIST);
-//            }
             movies.setReleaseDate(m.getReleaseDate());
         }
 
@@ -124,85 +110,31 @@ public class MovieService {
         }
 
         if (m.getRating() != 0 &&
-                m.getRating() != movies.getRating()) { //validasi Rating tidak boleh lebih dari rating 10
-//            FormatValidation.phoneNumberFormatValidation(m.1getPhoneNumber());
-            //Optional<Movies> mBeanOptional = movieRepo.findByRating(m.getRating());
+                m.getRating() != movies.getRating()) {
 
-            if (m.getRating()>10)//it means if exists
+
+            if (m.getRating()>10) //validasi Rating tidak boleh lebih dari rating 10
            {
                throw new ResourceNotFoundException(ConstantMessage.WARNING_RATING_INVALID);
           }
             movies.setRating(m.getRating());
         }
         if (
-                //validasi runtime movie harus lebih dari 1 menit
+
                 m.getRuntime() != movies.getRuntime()) {
-            if (m.getRuntime()<1)//it means if exists
+            if (m.getRuntime()<1) //validation runtime movie harus lebih dari 1 menit
             {
                 throw new ResourceNotFoundException(ConstantMessage.WARNING_RUNTIME_INVALID);
             }
             movies.setRuntime(m.getRuntime());
         }
     }
+
+    // Service create Batch
+    @Transactional(rollbackFor = {Exception.class})
+    public void saveAllMovies(List<Movies> ls){
+        movieRepo.saveAll(ls);
+    }
+
+
 }
-//
-//    @Transactional
-//    public void updateCustomerByIdV2(Customers c) throws Exception{
-//
-//        Customers customers = customerRepo.findById(c.getId()).orElseThrow(()->
-//                new ResourceNotFoundException(ConstantMessage.WARNING_CUSTOMER_NOT_FOUND));
-//
-//        customers.setModifiedBy("1");
-//        customers.setModifiedDate(new Date());
-//        if(c.getFirstName() != null
-//                && !Objects.equals(customers.getFirstName(),c.getFirstName())
-//                && !c.getFirstName().equals(""))
-//        {
-//            customers.setFirstName(c.getFirstName());//BERARTI ADA PERUBAHAN DI SINI
-//        }
-//
-//        if(c.getMiddleName() != null
-//                && !Objects.equals(customers.getMiddleName(),c.getMiddleName())
-//                && !c.getMiddleName().equals(""))
-//        {
-//            customers.setMiddleName(c.getMiddleName());//BERARTI ADA PERUBAHAN DI SINI
-//        }
-//
-//        if(c.getEmail() != null &&
-//                c.getEmail().length()>0 &&
-//                !Objects.equals(customers.getEmail(),c.getEmail()))
-//
-//        {
-//            FormatValidation.emailFormatValidation(c.getEmail());
-//
-//            Optional<Customers> cBeanOptional = customerRepo.findByEmail(c.getEmail());
-//            if(cBeanOptional.isPresent())//it means if exists
-//            {
-//                throw new ResourceNotFoundException(ConstantMessage.WARNING_EMAIL_EXIST);
-//            }
-//            customers.setEmail(c.getEmail());
-//        }
-//
-//        if(c.getAddress() != null
-//                && !Objects.equals(customers.getAddress(),c.getAddress())
-//                && !c.getAddress().equals(""))
-//        {
-//            customers.setAddress(c.getAddress());//BERARTI ADA PERUBAHAN DI SINI
-//        }
-//
-//        if(c.getPhoneNumber() != null &&
-//                c.getPhoneNumber().length()>0 &&
-//                !Objects.equals(customers.getPhoneNumber(),c.getPhoneNumber())){
-//
-//            FormatValidation.phoneNumberFormatValidation(c.getPhoneNumber());
-//            customers.setPhoneNumber(c.getPhoneNumber());
-//        }
-//        if(c.getBirthDate() != null &&
-//                !c.getBirthDate().toString().equals("") &&
-//                !Objects.equals(customers.getBirthDate().toString(),c.getBirthDate().toString()))
-//        {
-//            FormatValidation.dateFormatYYYYMMDDValidation(c.getBirthDate().toString());
-//            customers.setBirthDate(c.getBirthDate());
-//        }
-//    }
-//}

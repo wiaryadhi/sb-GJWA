@@ -98,5 +98,11 @@ public class ConstantMessage {
     public final static  String WARNING_RATING_INVALID = "RATING TIDAK BOLEH LEBIH DARI 10";
     public final static  String WARNING_RUNTIME_INVALID = "RUNTIME TIDAK BOLEH KURANG DARI 1 MENIT";
 
+    /* Movie Director */
+    public final static String WARNING_MVD_MAX_LENGTH_NAME = "MAKSIMAL NAMA AWAL 30 KARAKTER";
+    public final static String WARNING_MVD_NAME_MANDATORY = "NAMA DIRECTOR WAJIB DIISI";
+
+    /* Movie Genre */
+    public final static String WARNING_MVG_MANDATORY = "TIPE GENRE WAJIB HARUS DIISI";
 
 }

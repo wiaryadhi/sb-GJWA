@@ -47,11 +47,18 @@ public class MovieController {
     }
 
     @PostMapping("/v1/movies")
-    public ResponseEntity<Object>
-    saveMovie(@RequestBody Movies movies) throws Exception {
+    public ResponseEntity<Object> saveMovie(@RequestBody Movies movies) throws Exception {
 
         if (movies == null) throw new ResourceNotFoundException(ConstantMessage.ERROR_NO_CONTENT);
         movieService.saveMovies(movies);
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_SAVE, HttpStatus.CREATED, null, null, null);
+    }
+
+    @PostMapping("v1/movies/batch")
+    public ResponseEntity<Object> saveAllMovies(@RequestBody List<Movies> movies) throws Exception {
+
+        if (movies == null) throw new ResourceNotFoundException(ConstantMessage.ERROR_NO_CONTENT);
+        movieService.saveAllMovies(movies);
         return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_SAVE, HttpStatus.CREATED, null, null, null);
     }
 
@@ -60,8 +67,7 @@ public class MovieController {
         Movies movies = movieService.findByIdMovies(id);
 
         if (movies != null) {
-            return new ResponseHandler().
-                    generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movies, null, null);
+            return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movies, null, null);
         } else {
             throw new ResourceNotFoundException(ConstantMessage.WARNING_NOT_FOUND);
         }
@@ -77,98 +83,60 @@ public class MovieController {
             throw new ResourceNotFoundException(ConstantMessage.WARNING_DATA_EMPTY);
         }
 
-        return new ResponseHandler().
-                generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, lsMovies, null, null);
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, lsMovies, null, null);
     }
 
     @GetMapping("/v1/movies/datas/dto/all/uhuy")
-    public ResponseEntity<Object> findAllMoviesDTO()throws Exception{
+    public ResponseEntity<Object> findAllMoviesDTO() throws Exception {
 
         List<Movies> lsMovies = movieService.findAllMovies();
 
-        if(lsMovies.size()==0)
-        {
+        if (lsMovies.size() == 0) {
             throw new ResourceNotFoundException(ConstantMessage.WARNING_DATA_EMPTY);
         }
-        List<MovieDTO> lsMovieDTO = modelMapper.map(lsMovies, new TypeToken<List<MovieDTO>>() {}.getType());
+        List<MovieDTO> lsMovieDTO = modelMapper.map(lsMovies, new TypeToken<List<MovieDTO>>() {
+        }.getType());
 
-        return new ResponseHandler().
-                generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,lsMovieDTO,null,null);
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, lsMovieDTO, null, null);
     }
 
-//    @GetMapping("/reseller/datasDTO/all")
-//    public ResponseEntity<Object> findAllResellerDTO()throws Exception{
-//
-//        List<Movies> lsMovies = movieService.findAllMovies();
-//
-//        if(lsMovies.size()==0)
-//        {
-//            throw new ResourceNotFoundException(ConstantMessage.WARNING_DATA_EMPTY);
-//        }
-//        TypeMap<Movies, MovieDTO> propertyMapper = modelMapper.createTypeMap(Movies.class, MovieDTO.class);
-//        propertyMapper.addMappings(
-//                mapper -> mapper.map(src -> src.getMovieDirectors().getName(), MovieDTO::setName)
-//        );
-//
-////        propertyMapper.addMappings(
-////                mapper -> mapper.map(src -> src.getBusinessType().getBusinessTypeDescription(), ResellerDTO::setBusinessTypeDescription)
-////        );
-//
-//        List<MovieDTO> lsResellerDTO = modelMapper.map(lsMovies, new TypeToken<List<MovieDTO>>() {}.getType());
-//
-//        return new ResponseHandler().
-//                generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,lsResellerDTO,null,null);
-//}
 
     @GetMapping("/v1/movies/datas/search/{title}")
     public ResponseEntity<Object> getMovieByTitle(@PathVariable("title") String title) throws Exception {
 
-        return new ResponseHandler().
-                generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieService.findByTitleMovies(title), null, null);
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieService.findByTitleMovies(title), null, null);
     }
 
 
     @PutMapping("/v1/movies/t")
     public ResponseEntity<Object> updateMovieByID(@RequestBody Movies movies) throws Exception {
         movieService.updateMovieById(movies);
-        return new ResponseHandler().
-                generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, "", null, null);
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, "", null, null);
     }
 
     @GetMapping("/v1/movies/datas/like/{title}")
     public ResponseEntity<Object> findByTitleLike(@PathVariable("title") String title) throws Exception {
 
-        return new ResponseHandler().
-                generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieService.findByTitleMovieLike(title), null, null);
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieService.findByTitleMovieLike(title), null, null);
     }
 
 
-@GetMapping("v1/movies/datas/start/{title}")
-public ResponseEntity<Object> findTitleStartWith(@PathVariable("title") String title) throws Exception {
-    return new ResponseHandler().
-            generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieService.findByTitleStartsWith(title), null, null);
-}
+    @GetMapping("v1/movies/datas/start/{title}")
+    public ResponseEntity<Object> findTitleStartWith(@PathVariable("title") String title) throws Exception {
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieService.findByTitleStartsWith(title), null, null);
+    }
 
     @GetMapping("/v1/movies/datas/end/{title}")
-    public ResponseEntity<Object> findTitleEndWith(@PathVariable("title") String title)throws Exception{
-        return new ResponseHandler().
-                generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,movieService.findTitleEndsWith(title),null,null);
-}
+    public ResponseEntity<Object> findTitleEndWith(@PathVariable("title") String title) throws Exception {
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieService.findTitleEndsWith(title), null, null);
+    }
 
     @GetMapping("/v1/movies/datas/notlike/{title}")
-    public ResponseEntity<Object> findTitleNotLike(@PathVariable("title") String title)throws Exception{
+    public ResponseEntity<Object> findTitleNotLike(@PathVariable("title") String title) throws Exception {
 
-        return new ResponseHandler().
-                generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,movieService.findTitleNotLike(title),null,null);}
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieService.findTitleNotLike(title), null, null);
+    }
+
 
 }
-//
-//    @PutMapping("/v2/customers/t")
-//    public ResponseEntity<Object> updateCustomerByIDV2(@RequestBody Customers customers)throws Exception{
-//        movieService.updateCustomerByIdV2(customers);
-//        return new ResponseHandler().
-//                generateResponse(ConstantMessage.SUCCESS_FIND_BY,HttpStatus.OK,"",null,null);
-//    }
-//
-//}
-//
+
