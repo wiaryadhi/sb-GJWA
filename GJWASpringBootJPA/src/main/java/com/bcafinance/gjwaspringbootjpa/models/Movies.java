@@ -13,11 +13,15 @@ Version 1.0
 */
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -26,6 +30,24 @@ public class Movies {
 
     @ManyToOne
     private MovieDirectors movieDirectors;
+
+    @ManyToMany
+    @JoinTable(
+            name = "MovieMovieGenre",
+            joinColumns = @JoinColumn(name="MovieId",referencedColumnName = "MovieId"),
+            inverseJoinColumns = @JoinColumn(name = "GenreId",referencedColumnName = "GenreId")
+    )
+    @JsonManagedReference
+    private Set<MovieGenres> movieGenres = new HashSet<MovieGenres>();
+
+    public Set<MovieGenres> getMovieGenres() {
+        return movieGenres;
+    }
+
+    public void setMovieGenres(Set<MovieGenres> movieGenres) {
+        this.movieGenres = movieGenres;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,6 +87,7 @@ public class Movies {
 
     @Column(name = "IsActive",nullable = false)
     private boolean isActive = true;
+
 
     public Movies() {
     }
