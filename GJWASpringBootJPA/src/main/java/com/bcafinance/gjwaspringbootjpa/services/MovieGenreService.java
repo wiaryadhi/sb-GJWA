@@ -91,5 +91,9 @@ public class MovieGenreService {
         }
 
     }
+    @Transactional(rollbackFor = {Exception.class})
+    public void saveAllGenre(List<MovieGenres> ls){
+        movieGenreRepo.saveAll(ls);
+    }
 
     }
