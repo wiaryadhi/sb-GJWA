@@ -1,9 +1,11 @@
 package com.bcafinance.gjwaspringbootjpa.dto;
 
+import com.bcafinance.gjwaspringbootjpa.models.MovieDirectors;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
@@ -22,7 +24,9 @@ Version 1.0
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieDTO {
 
-    private String name;
+//    private String name;
+    @ManyToOne
+    private MovieDirectors movieDirectors;
 
     private Long id;
 
@@ -86,11 +90,27 @@ public class MovieDTO {
         this.rating = rating;
     }
 
-    public String getName() {
-        return name;
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+
+    public MovieDirectors getMovieDirectors() {
+        return movieDirectors;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMovieDirectors(MovieDirectors movieDirectors) {
+        this.movieDirectors = movieDirectors;
     }
+
+    //    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 }

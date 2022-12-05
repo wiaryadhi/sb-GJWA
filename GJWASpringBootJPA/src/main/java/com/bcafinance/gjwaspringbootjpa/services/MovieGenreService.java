@@ -11,11 +11,10 @@ Created on 04/12/2022 - 10:28
 Last Modified on 04/12/2022 - 10:28
 Version 1.0
 */
+
 import com.bcafinance.gjwaspringbootjpa.handler.ResourceNotFoundException;
 import com.bcafinance.gjwaspringbootjpa.models.MovieGenres;
-import com.bcafinance.gjwaspringbootjpa.models.Movies;
 import com.bcafinance.gjwaspringbootjpa.repos.MovieGenreRepo;
-import com.bcafinance.gjwaspringbootjpa.repos.MovieRepo;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,7 +47,7 @@ public class MovieGenreService {
     public MovieGenres findByTypeGenre(String type) throws Exception {
 
         return movieGenreRepo.findByType(type).orElseThrow(() ->
-                new ResourceNotFoundException(ConstantMessage.WARNING_MOVIE_NOT_FOUND));
+                new ResourceNotFoundException(ConstantMessage.WARNING_GENRE_NOT_FOUND));
     }
 
     public List<MovieGenres> findByTypeLike(String type) throws Exception {
@@ -69,7 +68,7 @@ public class MovieGenreService {
     }
 
     public void saveMovieGenre(MovieGenres movieGenres) throws Exception {
-        if (movieGenres.getType() == null) throw new DataIntegrityViolationException(ConstantMessage.ERROR_MOVIE_INVALID);
+        if (movieGenres.getType() == null) throw new DataIntegrityViolationException(ConstantMessage.WARNING_GENRE_INVALID);
 
         Optional<MovieGenres> movieByGenre = movieGenreRepo.findByType(movieGenres.getType());
 
@@ -80,7 +79,7 @@ public class MovieGenreService {
     public void updateMoviegenreById(MovieGenres m) throws Exception{
 
         MovieGenres movieGenres = movieGenreRepo.findById(m.getId()).orElseThrow(() ->
-                new ResourceNotFoundException(ConstantMessage.WARNING_MOVIE_NOT_FOUND));
+                new ResourceNotFoundException(ConstantMessage.WARNING_GENRE_NOT_FOUND));
 
         movieGenres.setModifiedBy("1");
         movieGenres.setModifiedDate(new Date());

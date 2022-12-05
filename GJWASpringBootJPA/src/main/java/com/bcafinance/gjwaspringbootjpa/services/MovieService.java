@@ -2,6 +2,7 @@ package com.bcafinance.gjwaspringbootjpa.services;
 
 
 import com.bcafinance.gjwaspringbootjpa.handler.ResourceNotFoundException;
+import com.bcafinance.gjwaspringbootjpa.models.MovieGenres;
 import com.bcafinance.gjwaspringbootjpa.models.Movies;
 import com.bcafinance.gjwaspringbootjpa.repos.MovieRepo;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
@@ -50,7 +51,7 @@ public class MovieService {
     public List<Movies> findByTitleStartsWith(String title) throws Exception{
         return movieRepo.findByTitleStartsWith(title);
     }
-    public List<Movies> findTitleEndsWith(String title)
+    public List<Movies> findByTitleEndWith(String title)
     {
         return movieRepo.findByTitleEndsWith(title);
     }
@@ -121,7 +122,8 @@ public class MovieService {
         }
         if (
 
-                m.getRuntime() != movies.getRuntime()) {
+                m.getRuntime() != movies.getRuntime()
+                && m.getRuntime() != 0 ) {
             if (m.getRuntime()<1) //validation runtime movie harus lebih dari 1 menit
             {
                 throw new ResourceNotFoundException(ConstantMessage.WARNING_RUNTIME_INVALID);
@@ -129,7 +131,12 @@ public class MovieService {
             movies.setRuntime(m.getRuntime());
         }
     }
-
+    public void addGenre(MovieGenres movieGenres, Long movieId) throws Exception {
+        Movies  movies = movieRepo.findById(movieId).
+                orElseThrow(() -> new ResourceNotFoundException(ConstantMessage.WARNING_PRODUCT_NOT_FOUND));
+        movies.getMovieGenres().add(movieGenres);
+        saveMovies(movies);
+    }
     // Service create Batch
     @Transactional(rollbackFor = {Exception.class})
     public void saveAllMovies(List<Movies> ls){

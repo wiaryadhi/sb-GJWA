@@ -5,12 +5,10 @@ import com.bcafinance.gjwaspringbootjpa.configuration.ConfigProperties;
 import com.bcafinance.gjwaspringbootjpa.core.SMTPCore;
 import com.bcafinance.gjwaspringbootjpa.handler.ResponseHandler;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
-import com.bcafinance.gjwaspringbootjpa.utils.ReadTextFileSB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,10 +42,10 @@ public class TakeTourController {
         System.out.println(System.getProperty("user.dir"));
         SMTPCore sc = new SMTPCore();
         ConfigProperties.getEmailPassword();
-        System.out.println(sc.sendMailWithAttachment(strArr,
-                "INI HANYA TEST",new ReadTextFileSB("\\data\\template-BCAF.html").getContentFile(),
-                "SSL",
-                new String[] {ResourceUtils.getFile("classpath:\\data\\sample.docx").getAbsolutePath()}));
+//        System.out.println(sc.sendMailWithAttachment(strArr,
+//                "INI HANYA TEST",new ReadTextFileSB("\\data\\template-BCAF.html").getContentFile(),
+//                "SSL");
+              //  new String[] {ResourceUtils.getFile("classpath:\\data\\sample.docx").getAbsolutePath()}));
         return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_SEND_EMAIL, HttpStatus.CREATED,null,null,null);
     }
 }

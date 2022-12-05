@@ -15,6 +15,7 @@ import java.util.Set;
 @Entity
 @Table(name = "MstProduct")
 public class Products implements Serializable {
+//public class Products implements Serializable {
 
     private static final long serialversionUID = 1L;
 

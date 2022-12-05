@@ -11,14 +11,15 @@ Created on 04/12/2022 - 11:45
 Last Modified on 04/12/2022 - 11:45
 Version 1.0
 */
+
 import com.bcafinance.gjwaspringbootjpa.dto.MovieDTO;
+import com.bcafinance.gjwaspringbootjpa.dto.MovieDirectorDTO;
 import com.bcafinance.gjwaspringbootjpa.dto.MovieGenreDTO;
 import com.bcafinance.gjwaspringbootjpa.handler.ResourceNotFoundException;
 import com.bcafinance.gjwaspringbootjpa.handler.ResponseHandler;
 import com.bcafinance.gjwaspringbootjpa.models.MovieGenres;
 import com.bcafinance.gjwaspringbootjpa.models.Movies;
 import com.bcafinance.gjwaspringbootjpa.services.MovieGenreService;
-import com.bcafinance.gjwaspringbootjpa.services.MovieService;
 import com.bcafinance.gjwaspringbootjpa.utils.ConstantMessage;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
@@ -83,6 +84,32 @@ public class MovieGenreController {
         return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, movieGenreService.findByTypeGenre(type), null, null);
     }
 
+    @GetMapping("/v1/movieGenres/datas/like/dto/{type}")
+    public ResponseEntity<Object> findByTitleLikeDTO(@PathVariable("type") String type) throws Exception {
+        List<MovieGenres> lsMovieG = movieGenreService.findByTypeLike(type);
+
+//        int data = 0;
+        if (lsMovieG.size() == 0) {
+            throw new ResourceNotFoundException(ConstantMessage.WARNING_DATA_EMPTY);
+        }
+        List<MovieGenreDTO> lsMovieDTO = modelMapper.map(lsMovieG, new TypeToken<List<MovieGenreDTO>>() {
+        }.getType());
+
+        return new ResponseHandler().generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK, lsMovieDTO, null, null);
+    }
+
+    @GetMapping("/v1/moviegenres/dto/{id}")
+    public ResponseEntity<Object> getMovieByIDDTO(@PathVariable("id") long id) throws Exception {
+        MovieGenres movieGenres = movieGenreService.findByIdGenres(id);
+
+        if (movieGenres != null) {
+            MovieGenreDTO movieDTO = modelMapper.map(movieGenres,MovieGenreDTO.class);
+            return new ResponseHandler().
+                    generateResponse(ConstantMessage.SUCCESS_FIND_BY, HttpStatus.OK,movieDTO, null, null);
+        } else {
+            throw new ResourceNotFoundException(ConstantMessage.WARNING_NOT_FOUND);
+        }
+    }
 
     //Post single data
     @PostMapping("/v1/movieGenre")

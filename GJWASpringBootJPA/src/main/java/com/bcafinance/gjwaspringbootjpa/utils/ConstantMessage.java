@@ -93,16 +93,39 @@ public class ConstantMessage {
 
     /*Movie*/
 
-    public final static  String WARNING_MOVIE_NOT_FOUND = "JUDUL MOVIE TIDAK DITEMUKAN";
-    public final static  String ERROR_MOVIE_INVALID = "JUDUL TIDAK BOLEH KOSONG";
-    public final static  String WARNING_RATING_INVALID = "RATING TIDAK BOLEH LEBIH DARI 10";
-    public final static  String WARNING_RUNTIME_INVALID = "RUNTIME TIDAK BOLEH KURANG DARI 1 MENIT";
+    public final static String WARNING_MOVIE_NOT_FOUND = "JUDUL MOVIE TIDAK DITEMUKAN";
+    public final static String ERROR_MOVIE_INVALID = "JUDUL TIDAK BOLEH KOSONG";
+    public final static String WARNING_RATING_INVALID = "RATING TIDAK BOLEH LEBIH DARI 10";
+    public final static String WARNING_RUNTIME_INVALID = "RUNTIME TIDAK BOLEH KURANG DARI 1 MENIT";
 
     /* Movie Director */
     public final static String WARNING_MVD_MAX_LENGTH_NAME = "MAKSIMAL NAMA AWAL 30 KARAKTER";
     public final static String WARNING_MVD_NAME_MANDATORY = "NAMA DIRECTOR WAJIB DIISI";
+    public final static String WARNING_DIRECTOR_NOT_FOUND = "NAMA DIRECTOR TIDAK DITEMUKAN";
 
     /* Movie Genre */
     public final static String WARNING_MVG_MANDATORY = "TIPE GENRE WAJIB HARUS DIISI";
+    public final static String WARNING_GENRE_NOT_FOUND = "TIPE GENRE TIDAK DITEMUKAN";
+    public final static String WARNING_GENRE_INVALID = "TIPE GENRE TIDAK VALID";
 
+    /* Data user */
+    public final static String WARNING_FAILED_AUTHENTICATION = "AUTENTIKASI GAGAL";
+    public final static String SUCCESS_AUTHENTICATION = "EMAIL VALID";
+
+    public final static String WARNING_USERNAME_MANDATORY = "EMAIL TIDAK BOLEH KOSONG";
+    public final static String WARNING_USER_BIRTHDATE_MANDATORY= "TANGGAL LAHIR WAJIB DIISI";
+    public final static String WARNING_USER_EMAIL_MANDATORY= "EMAIL WAJIB DIISI";
+    public final static String WARNING_USER_PASSWORD_MANDATORY= "PASSWORD TIDAK BOLEH KOSONG";
+    public final static String WARNING_NIP_MANDATORY= "NIP TIDAK BOLEH KOSONG";
+
+    /* CSV */
+    public final static String CONTENT_TYPE_CSV = "text/csv";
+    public final static String ERROR_UPLOAD_CSV = "UPLOAD FILE GAGAL ";
+    public final static String ERROR_NOT_CSV_FILE = "FORMAT FILE HARUS CSV ";
+    public final static String WARNING_APP_FIRSTNAME_MANDATORY = "FIRSTNAME HARUS DIISI ";
+    public final static String WARNING_APP_LASTNAME_MANDATORY = "LASTNAME HARUS DIISI  ";
+    public final static String WARNING_APP_AVATAR_MANDATORY = "AVATAR HARUS DIISI  ";
+    public final static String WARNING_APP_LANGUAGE_MANDATORY = "BAHASA HARUS DIISI  ";
+    public final static String WARNING_APP_SKILL_MANDATORY = "SKILL HARUS DIISI  ";
+    public final static String WARNING_APP_UNIVERSITY_MANDATORY = "UNIVERSITAS HARUS DIISI  ";
 }

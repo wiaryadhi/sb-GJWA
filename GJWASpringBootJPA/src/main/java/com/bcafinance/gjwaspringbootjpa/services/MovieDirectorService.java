@@ -51,7 +51,7 @@ public class MovieDirectorService {
     public MovieDirectors findByNameDirectors(String name) throws Exception {
 
         return movieDirectorRepo.findByName(name).orElseThrow(() ->
-                new ResourceNotFoundException(ConstantMessage.WARNING_CUSTOMER_NOT_FOUND));
+                new ResourceNotFoundException(ConstantMessage.WARNING_DIRECTOR_NOT_FOUND));
     }
 
     public List<MovieDirectors> findByNameDirectorLike(String name) throws Exception {
@@ -74,7 +74,7 @@ public class MovieDirectorService {
     public void updateMovieDirectorById(MovieDirectors md) throws Exception {
 
         MovieDirectors movieDirectors = movieDirectorRepo.findById(md.getId()).orElseThrow(() ->
-                new ResourceNotFoundException(ConstantMessage.WARNING_MOVIE_NOT_FOUND));
+                new ResourceNotFoundException(ConstantMessage.WARNING_DIRECTOR_NOT_FOUND));
 
         movieDirectors.setModifiedBy("1");
         movieDirectors.setModifiedDate(new Date());
@@ -90,6 +90,11 @@ public class MovieDirectorService {
             movieDirectors.setBirthdate(md.getBirthdate());
         }
 
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    public void saveAllDirector(List<MovieDirectors> ls){
+        movieDirectorRepo.saveAll(ls);
     }
 
 }

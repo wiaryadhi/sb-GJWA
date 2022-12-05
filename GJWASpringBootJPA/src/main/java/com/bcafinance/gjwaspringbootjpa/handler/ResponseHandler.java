@@ -27,4 +27,19 @@ public class ResponseHandler {
         }
         return new ResponseEntity<Object>(map,status);
     }
+    public ResponseEntity<Object> generateResponse2(String message, HttpStatus status, Object responseObj,Object responseObj2, Object errorCode, WebRequest request) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("message", message);
+        map.put("status", status.value());
+        map.put("data", responseObj==null?"":responseObj);
+        map.put("data", responseObj2==null?"":responseObj2);
+        map.put("timestamp", new Date());
+        map.put("success",!status.isError());
+        if(errorCode != null)
+        {
+            map.put("error_code",errorCode);
+            map.put("path",request.getDescription(false));
+        }
+        return new ResponseEntity<Object>(map,status);
+    }
 }

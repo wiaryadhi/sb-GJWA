@@ -23,10 +23,10 @@ public interface MovieGenreRepo extends JpaRepository<MovieGenres,Long> {
 
     List<MovieGenres> findAll();
 
-    List<MovieGenres> findByTypeLike(String name);
-    List<MovieGenres> findByTypeNotLike(String name);
+    List<MovieGenres> findByTypeLike(String type);
+    List<MovieGenres> findByTypeNotLike(String type);
 
-    List<MovieGenres> findByTypeStartsWith(String name);
+    List<MovieGenres> findByTypeStartsWith(String type);
 
-    List<MovieGenres> findByTypeEndsWith(String name);
+    List<MovieGenres> findByTypeEndsWith(String type);
 }
